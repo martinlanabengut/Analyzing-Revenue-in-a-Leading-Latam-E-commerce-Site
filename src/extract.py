@@ -26,18 +26,28 @@ def get_public_holidays(public_holidays_url: str, year: str) -> DataFrame:
     # You must raise a SystemExit if the request fails. Research the raise_for_status
     # method from the requests library.
 
-    response = requests.get(f'{public_holidays_url}/{year}/BR')
-
     try:
+
+        full_url = f"{public_holidays_url}/{year}/BR"
+
+        response = requests.get(full_url)
+
         response.raise_for_status()
-    except requests.HTTPError:
-        print(f"Request to {public_holidays_url}/{year}/BR failed with status code {response.status_code}")
-        raise SystemExit(1)
 
-    df = pd.read_json(response.text)
-    df.drop(columns=['types', 'counties'], inplace=True)
+        data = response.json()
 
-    return df
+        df = pd.DataFrame(data)
+
+        df.drop(columns=["types", "counties"], inplace=True)
+
+        # Convert the "date" column to datetime
+        df["date"] = to_datetime(df["date"])
+
+        return df
+
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred while fetching public holidays: {e}")
+        raise SystemExit
 
 
 def extract(
