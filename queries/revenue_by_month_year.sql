@@ -5,8 +5,7 @@
 -- Year2017, with the revenue per month of 2017 (0.00 if it doesn't exist) and
 -- Year2018, with the revenue per month of 2018 (0.00 if it doesn't exist).
 
---WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!
-SELECT month    AS month_no,
+SELECT month AS month_no,
        CASE
            WHEN a.month = '01' THEN 'Jan'
            WHEN a.month = '02' THEN 'Feb'
