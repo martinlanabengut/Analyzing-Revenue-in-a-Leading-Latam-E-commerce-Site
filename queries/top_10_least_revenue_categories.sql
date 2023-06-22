@@ -9,7 +9,7 @@
 
 SELECT
     category_translation.product_category_name_english AS Category,
-    COUNT(DISTINCT orders.order_id) AS Num_orders,
+    COUNT(DISTINCT orders.order_id) AS Num_order,
     SUM(order_payments.payment_value) AS Revenue
 FROM
     olist_orders orders
